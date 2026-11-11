@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B2A Wealth | Planejamento financeiro e patrimonial</title>
+<meta name="description" content="B2A Wealth: planejamento financeiro e patrimonial com número, prazo e estratégia. Atendimento personalizado e acesso ao ecossistema de soluções do AWT Group.">
+<meta property="og:title" content="B2A Wealth | Planejamento financeiro e patrimonial">
+<meta property="og:description" content="Seu patrimônio merece uma visão completa. Planejamento com número, prazo e estratégia.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="b2a-wealth-logo.png">
+<meta name="theme-color" content="#4b180e">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234b180e'/%3E%3Crect x='29' y='23' width='12' height='54' fill='%23f6ece2'/%3E%3Cpath d='M44.5 23H55A12.5 12.5 0 0 1 55 48.5H44.5Z' fill='%23c46a3a'/%3E%3Cpath d='M44.5 51.5H58A12.75 12.75 0 0 1 58 77H44.5Z' fill='%23f6ece2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<style>
+:root{
+  /* ink + brand (cor primaria do guia: #4b180e) */
+  --ink-900:#1d0905; --ink-800:#2c0e07; --ink-700:#3a1209; --ink-600:#4b180e;
+  --brand:#4b180e; --brand-soft:#6b2a1b; --brand-deep:#2c0e07; --brand-wash:rgba(75,24,14,.08);
+  --accent:#c46a3a; --accent-soft:#e08a57; --accent-deep:#9a4c24; --accent-wash:rgba(196,106,58,.14);
+  --sand:#e6cfb3; --sand-deep:#d7b995;
+  --surface-0:#fffaf4; --surface-1:#f6ede3; --surface-2:#efe2d2; --surface-3:#e4d2bd;
+  /* text on light */
+  --on-light-hi:#2a0f08; --on-light-body:rgba(42,15,8,.80); --on-light-mute:rgba(42,15,8,.62); --on-light-faint:rgba(42,15,8,.46);
+  /* text on dark */
+  --on-dark-hi:#fff4e8; --on-dark-body:rgba(255,244,232,.84); --on-dark-mute:rgba(255,244,232,.64); --on-dark-faint:rgba(255,244,232,.46);
+  /* hairlines */
+  --line-l-faint:rgba(75,24,14,.08); --line-l:rgba(75,24,14,.16); --line-l-strong:rgba(75,24,14,.30);
+  --line-d-faint:rgba(255,244,232,.08); --line-d:rgba(255,244,232,.16); --line-d-strong:rgba(255,244,232,.30);
+  /* glass */
+  --glass-d:rgba(44,14,7,.46); --glass-d-hi:rgba(44,14,7,.66); --glass-l:rgba(255,250,244,.62);
+  /* type */
+  --font:'Manrope',system-ui,sans-serif;
+  --text-xs:clamp(.74rem,.72rem + .10vw,.8rem);
+  --text-sm:clamp(.86rem,.83rem + .15vw,.94rem);
+  --text-base:clamp(1rem,.96rem + .20vw,1.1rem);
+  --text-lg:clamp(1.15rem,1.08rem + .36vw,1.36rem);
+  --text-xl:clamp(1.4rem,1.28rem + .62vw,1.8rem);
+  --text-2xl:clamp(1.9rem,1.55rem + 1.5vw,2.8rem);
+  --text-3xl:clamp(2.3rem,1.8rem + 2.6vw,4rem);
+  --text-4xl:clamp(2.7rem,1.9rem + 4.2vw,5.6rem);
+  --text-mega:clamp(3rem,1rem + 11.4vw,15rem);
+  --track-display:-.035em; --track-tight:-.018em; --track-wide:.1em; --track-caps:.16em;
+  --leading-display:1.02; --leading-tight:1.14; --leading-body:1.68;
+  /* space */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:64px; --sp-9:96px;
+  --section-y:clamp(80px,10vw,160px); --gutter:clamp(20px,5vw,64px); --measure:62ch; --maxw:1320px;
+  /* radii: pills for interactive, 22px for surfaces, 12px for inputs */
+  --r-input:12px; --r-card:22px; --r-pill:999px;
+  /* elevation (shadows tinted to brand) */
+  --e-1:0 1px 2px rgba(44,14,7,.16);
+  --e-2:0 2px 4px rgba(44,14,7,.12),0 6px 16px rgba(44,14,7,.10);
+  --e-3:0 4px 8px rgba(44,14,7,.14),0 16px 36px rgba(44,14,7,.16);
+  --e-4:0 10px 20px rgba(44,14,7,.18),0 36px 80px rgba(44,14,7,.30);
+  --e-glow:0 0 0 1px rgba(196,106,58,.30),0 12px 48px rgba(196,106,58,.28);
+  --e-inset:inset 0 1px 0 rgba(255,244,232,.18);
+  /* motion */
+  --ease-out:cubic-bezier(.22,.70,.20,1); --ease-in-out:cubic-bezier(.65,.02,.30,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1); --ease-glide:cubic-bezier(.16,1,.30,1);
+  --dur-1:140ms; --dur-2:240ms; --dur-3:420ms; --dur-4:720ms; --dur-5:1200ms;
+  /* z */
+  --z-base:1; --z-sticky:100; --z-overlay:500; --z-modal:800; --z-loader:900; --z-grain:999;
+  /* live theme for colour-swap panels */
+  --swap-bg:var(--brand); --swap-fg:var(--on-dark-hi);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;font-family:var(--font);font-size:var(--text-base);line-height:var(--leading-body);color:var(--on-light-body);background:var(--surface-1);overflow-x:clip;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3{text-wrap:balance;font-weight:600;color:inherit}
+p{text-wrap:pretty}
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+section{position:relative}
+.sec{padding-block:var(--section-y)}
+.dark{background:var(--brand-deep);color:var(--on-dark-body)}
+.dark h2,.dark h3{color:var(--on-dark-hi)}
+.light{background:var(--surface-1)}
+.light h2,.light h3,.sand h2,.sand h3{color:var(--on-light-hi)}
+.sand{background:var(--surface-3)}
+.eyebrow{font-size:var(--text-xs);letter-spacing:var(--track-caps);text-transform:uppercase;font-weight:600;color:var(--accent-deep);display:inline-block;margin-bottom:var(--sp-5)}
+.dark .eyebrow,.model .eyebrow,.vision .eyebrow{color:var(--accent-soft)}
+.h2{font-size:var(--text-3xl);letter-spacing:var(--track-display);line-height:var(--leading-display)}
+.lead{font-size:var(--text-lg);max-width:var(--measure);line-height:var(--leading-body)}
+.mute{color:var(--on-light-mute)} .dark .mute{color:var(--on-dark-mute)}
+
+/* grain */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:var(--z-grain);opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grainShift 1.2s steps(6) infinite}
+@keyframes grainShift{0%{transform:translate(0,0)}20%{transform:translate(-2%,1%)}40%{transform:translate(1%,-2%)}60%{transform:translate(-1%,2%)}80%{transform:translate(2%,-1%)}100%{transform:translate(0,0)}}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:var(--z-loader);background:var(--brand-deep);color:var(--on-dark-hi);display:grid;place-items:center;transition:transform var(--dur-5) var(--ease-in-out),opacity var(--dur-4) var(--ease-out)}
+.loader.done{transform:translateY(-100%);pointer-events:none}
+.loader-in{display:grid;gap:var(--sp-6);justify-items:center}
+.loader img{width:clamp(180px,28vw,300px);height:auto;animation:fadeUp var(--dur-5) var(--ease-glide) both}
+.loader-num{font-size:var(--text-4xl);font-weight:300;letter-spacing:var(--track-display);line-height:1}
+.loader-bar{width:clamp(160px,24vw,260px);height:2px;background:var(--line-d);overflow:hidden;border-radius:var(--r-pill)}
+.loader-bar i{display:block;height:100%;width:100%;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto 0;z-index:var(--z-sticky);height:76px;display:flex;align-items:center;transition:background var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out),height var(--dur-3) var(--ease-out)}
+.hdr.scrolled{background:var(--glass-d-hi);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 1px 0 var(--line-d);height:68px}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5)}
+.hdr-logo img{height:58px;width:auto;margin-block:-6px}
+.nav{display:flex;gap:var(--sp-6);align-items:center}
+.nav a.lk{position:relative;font-size:var(--text-sm);color:var(--on-dark-body);font-weight:500;padding-block:6px}
+.nav a.lk::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent-soft);transform:scaleX(0);transform-origin:right;transition:transform var(--dur-3) var(--ease-out)}
+.nav a.lk:hover::after{transform:scaleX(1);transform-origin:left}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-3);white-space:nowrap;padding:15px 28px;border-radius:var(--r-pill);font-weight:600;font-size:var(--text-sm);letter-spacing:.01em;transition:transform var(--dur-1) var(--ease-spring),box-shadow var(--dur-2) var(--ease-out),background var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out);will-change:transform}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:var(--accent);color:var(--ink-900);box-shadow:var(--e-2),var(--e-inset)}
+.btn-primary:hover{background:var(--accent-soft);transform:translateY(-2px);box-shadow:var(--e-glow)}
+.btn-ghost{color:var(--on-dark-hi);box-shadow:inset 0 0 0 1px var(--line-d-strong);background:var(--glass-d)}
+.btn-ghost:hover{background:var(--on-dark-hi);color:var(--brand-deep);transform:translateY(-2px)}
+.btn-dark{background:var(--brand);color:var(--on-dark-hi);box-shadow:var(--e-2)}
+.btn-dark:hover{background:var(--brand-soft);transform:translateY(-2px);box-shadow:var(--e-3)}
+.btn .arr{transition:transform var(--dur-3) var(--ease-spring)} .btn:hover .arr{transform:translateX(4px)}
+.burger{display:none;width:44px;height:44px;border-radius:var(--r-pill);background:var(--glass-d);box-shadow:inset 0 0 0 1px var(--line-d)}
+.burger i{display:block;width:18px;height:2px;background:var(--on-dark-hi);margin:4px auto;border-radius:2px;transition:transform var(--dur-3) var(--ease-out)}
+.menu-open .burger i:nth-child(1){transform:translateY(6px) rotate(45deg)} .menu-open .burger i:nth-child(2){opacity:0} .menu-open .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* hero */
+.hero{min-height:100dvh;background:var(--brand-deep);color:var(--on-dark-body);display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;filter:saturate(.9) contrast(1.05);transform:scale(1.06);animation:heroDrift 24s var(--ease-in-out) infinite alternate}
+@keyframes hintFloat{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-6px)}}
+@keyframes heroDrift{from{transform:scale(1.06) translate3d(-1.2%,0,0)}to{transform:scale(1.14) translate3d(1.2%,-1%,0)}}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(29,9,5,.94) 8%,rgba(44,14,7,.78) 46%,rgba(75,24,14,.42) 100%),linear-gradient(180deg,rgba(29,9,5,.55) 0%,transparent 30%,rgba(29,9,5,.92) 100%)}
+.hero-main{flex:1;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:var(--sp-6);padding-top:96px;padding-bottom:var(--sp-5)}
+.hero h1{font-size:clamp(2.6rem,1.5rem + 3.7vw,4.7rem);letter-spacing:var(--track-display);line-height:var(--leading-display);color:var(--on-dark-hi);font-weight:600;max-width:12.5ch}
+.hero h1 em{font-style:normal;color:var(--accent-soft)}
+.hero .sub{font-size:var(--text-lg);max-width:44ch;margin-top:var(--sp-5);color:var(--on-dark-body)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-5)}
+.stage{position:relative;height:min(56vh,520px);cursor:grab;touch-action:pan-y}
+.stage:active{cursor:grabbing}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage-hint{animation:hintFloat 3.2s var(--ease-in-out) infinite;position:absolute;left:50%;bottom:0;transform:translateX(-50%);padding:8px 16px;border-radius:var(--r-pill);background:var(--glass-d);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px var(--line-d);font-size:var(--text-xs);letter-spacing:var(--track-wide);color:var(--on-dark-mute);white-space:nowrap}
+.disc{padding-block:var(--sp-5);border-top:1px solid var(--line-d);background:var(--glass-d-hi);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.disc p{font-size:var(--text-sm);line-height:1.6;color:var(--on-dark-body);max-width:none}
+.disc a{color:var(--accent-soft);text-decoration:underline;text-underline-offset:3px}
+.disc a:hover{color:var(--on-dark-hi)}
+
+/* sobre */
+.about{display:grid;grid-template-columns:5fr 6fr;gap:clamp(32px,6vw,96px);align-items:center}
+.about-media{position:relative;padding-bottom:var(--sp-8)}
+.photo{position:relative;overflow:hidden;border-radius:var(--r-card);box-shadow:var(--e-4)}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform var(--dur-5) var(--ease-glide)}
+.photo:hover img{transform:scale(1.05)}
+.photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(44,14,7,.45) 100%);pointer-events:none}
+.about-media .p1{aspect-ratio:4/5;width:86%}
+.about-media .p2{position:absolute;right:0;bottom:0;width:48%;aspect-ratio:1/1;border:6px solid var(--surface-1)}
+.banker{margin-top:var(--sp-7);display:flex;align-items:center;gap:var(--sp-5);padding:var(--sp-5);border-radius:var(--r-card);background:var(--surface-0);box-shadow:var(--e-2),var(--e-inset);border:1px solid var(--line-l-faint);transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.banker:hover{transform:translateY(-4px);box-shadow:var(--e-3)}
+.mono{flex:none;width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:var(--on-dark-hi);font-weight:800;letter-spacing:.04em;box-shadow:0 0 0 4px var(--accent-wash),0 0 0 5px var(--accent)}
+.banker b{display:block;color:var(--on-light-hi);font-size:var(--text-lg);font-weight:600;line-height:1.2}
+.banker span{font-size:var(--text-sm);color:var(--on-light-mute)}
+.about p+p{margin-top:var(--sp-4)}
+
+/* metodo (colour swap) */
+.swap{background:var(--swap-bg);color:var(--swap-fg);transition:background var(--dur-5) var(--ease-glide),color var(--dur-4) var(--ease-out);overflow:hidden}
+.swap[data-tone="0"]{--swap-bg:var(--brand);--swap-fg:var(--on-dark-hi)}
+.swap[data-tone="1"]{--swap-bg:var(--accent-deep);--swap-fg:var(--on-dark-hi)}
+.swap[data-tone="2"]{--swap-bg:var(--sand);--swap-fg:var(--on-light-hi)}
+.swap .h2{color:var(--swap-fg)}
+.method{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(28px,5vw,80px);align-items:center;margin-top:var(--sp-7)}
+.tabs{display:grid;gap:var(--sp-3)}
+.tab{display:block;width:100%;text-align:left;padding:var(--sp-5) var(--sp-6);border-radius:var(--r-card);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--swap-fg) 22%,transparent);transition:background var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.tab:hover{transform:translateX(6px)}
+.tab[aria-selected="true"]{background:color-mix(in srgb,var(--swap-fg) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--swap-fg) 60%,transparent)}
+.tab h3{font-size:var(--text-xl);letter-spacing:var(--track-tight);font-weight:600;color:var(--swap-fg)}
+.tab p{max-height:0;opacity:0;overflow:hidden;font-size:var(--text-base);color:var(--swap-fg);transition:max-height var(--dur-4) var(--ease-glide),opacity var(--dur-3) var(--ease-out),margin var(--dur-3) var(--ease-out)}
+.tab[aria-selected="true"] p{max-height:200px;opacity:.88;margin-top:var(--sp-3)}
+.tab-media{position:relative;aspect-ratio:5/4;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--e-4)}
+.tab-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity var(--dur-5) var(--ease-glide),transform var(--dur-5) var(--ease-glide)}
+.tab-media img.on{opacity:1;transform:scale(1)}
+.tab-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(29,9,5,.5));pointer-events:none}
+.progress{height:2px;background:color-mix(in srgb,var(--swap-fg) 20%,transparent);margin-top:var(--sp-5);border-radius:var(--r-pill);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--swap-fg);transform-origin:left;transform:scaleX(0)}
+.trio{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-6);margin-top:var(--sp-5);font-size:var(--text-xl);font-weight:300;letter-spacing:var(--track-tight);color:var(--swap-fg);opacity:.9}
+.trio b{font-weight:800}
+
+/* especialidades coverflow */
+.spec .head{max-width:760px}
+.spec .head p{margin-top:var(--sp-5);color:var(--on-dark-mute)}
+.cflow{position:relative;height:clamp(560px,64vw,640px);margin-top:var(--sp-7);perspective:1600px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.cflow:active{cursor:grabbing}
+.cflow-track{position:absolute;inset:0;transform-style:preserve-3d}
+.scard{position:absolute;left:50%;top:50%;width:min(440px,80vw);height:min(540px,92%);border-radius:var(--r-card);overflow:hidden;background:var(--ink-700);box-shadow:var(--e-4),inset 0 0 0 1px var(--line-d);display:flex;flex-direction:column;will-change:transform;backface-visibility:hidden}
+.scard .im{height:44%;position:relative;overflow:hidden;flex:none}
+.scard .im img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.scard .im::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--ink-700))}
+.scard .bd{padding:var(--sp-5) var(--sp-6) var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-3);flex:1}
+.scard h3{font-size:var(--text-xl);letter-spacing:var(--track-tight);line-height:1.15;color:var(--on-dark-hi)}
+.scard .st{font-size:var(--text-sm);color:var(--on-dark-body)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:auto}
+.chip{padding:7px 14px;border-radius:var(--r-pill);font-size:var(--text-xs);font-weight:600;letter-spacing:.02em;color:var(--on-dark-hi);background:var(--accent-wash);box-shadow:inset 0 0 0 1px rgba(196,106,58,.45);transition:background var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out)}
+.chip:hover{background:var(--accent);color:var(--ink-900)}
+.belt-ctl{display:flex;align-items:center;justify-content:center;gap:var(--sp-4);margin-top:var(--sp-6)}
+.round{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line-d-strong);background:var(--glass-d);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform var(--dur-2) var(--ease-spring),background var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out)}
+.round:hover{background:var(--accent);color:var(--ink-900);transform:scale(1.08)}
+.round.l{box-shadow:inset 0 0 0 1px var(--line-l-strong);background:var(--surface-0);color:var(--brand)}
+.round.l:hover{background:var(--brand);color:var(--on-dark-hi)}
+.note{font-size:var(--text-sm);color:var(--on-dark-mute);text-align:center;max-width:70ch;margin:var(--sp-6) auto 0}
+
+/* compare */
+.cmp-head{max-width:760px}
+.cmp{position:relative;margin-top:var(--sp-7);aspect-ratio:16/8;min-height:380px;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--e-4);cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none;isolation:isolate}
+.cmp-l{position:absolute;inset:0}
+.cmp-l img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cmp-before img{filter:grayscale(1) contrast(.9) brightness(.62)}
+.cmp-before::after{content:'';position:absolute;inset:0;background:rgba(29,9,5,.35)}
+.cmp-after{clip-path:inset(0 0 0 var(--cut,50%))}
+.cmp-after::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(75,24,14,.35),rgba(196,106,58,.12))}
+.cmp-tag{position:absolute;top:var(--sp-5);z-index:2;padding:10px 18px;border-radius:var(--r-pill);font-weight:600;font-size:var(--text-sm);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px var(--line-d)}
+.cmp-before .cmp-tag{left:var(--sp-5);background:var(--glass-d);color:var(--on-dark-hi)}
+.cmp-after .cmp-tag{right:var(--sp-5);background:var(--accent);color:var(--ink-900)}
+.cmp-items{position:absolute;bottom:var(--sp-5);z-index:2;display:grid;gap:var(--sp-2)}
+.cmp-before .cmp-items{left:var(--sp-5)} .cmp-after .cmp-items{right:var(--sp-5);justify-items:end}
+.cmp-items span{padding:9px 16px;border-radius:var(--r-pill);font-size:var(--text-sm);font-weight:500;background:var(--glass-d-hi);color:var(--on-dark-hi);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px var(--line-d)}
+.cmp-after .cmp-items span{background:var(--glass-l);color:var(--on-light-hi);box-shadow:inset 0 0 0 1px var(--line-l)}
+.cmp-handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;background:var(--on-dark-hi);z-index:3;transform:translateX(-1px);box-shadow:0 0 24px rgba(255,244,232,.5)}
+.cmp-handle b{position:absolute;top:50%;left:50%;width:58px;height:58px;margin:-29px;border-radius:50%;background:var(--surface-0);color:var(--brand);display:grid;place-items:center;box-shadow:var(--e-3);animation:handlePulse 2.4s var(--ease-in-out) infinite}
+@keyframes handlePulse{0%,100%{box-shadow:var(--e-3),0 0 0 0 rgba(255,244,232,.5)}50%{box-shadow:var(--e-3),0 0 0 14px rgba(255,244,232,0)}}
+
+/* etapas strip */
+.strip-head{display:flex;justify-content:space-between;align-items:end;gap:var(--sp-6);flex-wrap:wrap}
+.strip{position:relative;height:clamp(440px,42vw,520px);margin-top:var(--sp-7);overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.strip:active{cursor:grabbing}
+.lcard{position:absolute;left:50%;top:50%;width:300px;height:420px;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--e-3);background:var(--brand);will-change:transform;transition:box-shadow var(--dur-3) var(--ease-out)}
+.lcard:hover{box-shadow:var(--e-4)}
+.lcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;transition:transform var(--dur-5) var(--ease-glide),filter var(--dur-4) var(--ease-out);filter:saturate(.8)}
+.lcard:hover img{transform:scale(1.08);filter:saturate(1.15)}
+.lcard::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(29,9,5,.88));pointer-events:none}
+.lcard div{position:absolute;left:var(--sp-5);right:var(--sp-5);bottom:var(--sp-5);z-index:2;color:var(--on-dark-hi)}
+.lcard h3{font-size:var(--text-xl);color:var(--on-dark-hi);letter-spacing:var(--track-tight)}
+.lcard p{font-size:var(--text-sm);color:var(--on-dark-body);margin-top:var(--sp-2)}
+
+/* modelo */
+.model{position:relative;isolation:isolate;overflow:hidden;color:var(--on-dark-body)}
+.model-bg{position:absolute;inset:0;z-index:-1}
+.model-bg img{width:100%;height:100%;object-fit:cover}
+.model-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,9,5,.86),rgba(44,14,7,.72) 50%,rgba(29,9,5,.92))}
+.model h2{color:var(--on-dark-hi)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-4);margin-top:var(--sp-7)}
+.step{padding:var(--sp-6);border-radius:var(--r-card);background:var(--glass-d);backdrop-filter:blur(18px) saturate(130%);-webkit-backdrop-filter:blur(18px) saturate(130%);box-shadow:var(--e-2),var(--e-inset),inset 0 0 0 1px var(--line-d);min-height:300px;display:flex;flex-direction:column;transition:transform var(--dur-3) var(--ease-out),background var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.step:nth-child(even){margin-top:var(--sp-7)}
+.step:hover{transform:translateY(-8px);background:var(--accent-deep);box-shadow:var(--e-4)}
+.step .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--ink-900);margin-bottom:var(--sp-6)}
+.step h3{font-size:var(--text-xl);letter-spacing:var(--track-tight);color:var(--on-dark-hi)}
+.step p{margin-top:var(--sp-3);font-size:var(--text-sm);color:var(--on-dark-body)}
+
+/* valores */
+.vals{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,80px);align-items:center;margin-top:var(--sp-7)}
+.vlist{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-2)}
+.vitem{padding:var(--sp-4) 0;font-size:var(--text-2xl);font-weight:300;letter-spacing:var(--track-tight);line-height:1.15;color:var(--swap-fg);opacity:.5;cursor:pointer;transition:opacity var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out),font-weight var(--dur-3) var(--ease-out)}
+.vitem.on,.vitem:hover{opacity:1;transform:translateX(12px)}
+.vitem small{display:block;font-size:var(--text-sm);font-weight:400;letter-spacing:0;max-height:0;opacity:0;overflow:hidden;transition:max-height var(--dur-4) var(--ease-glide),opacity var(--dur-3) var(--ease-out)}
+.vitem.on small{max-height:80px;opacity:.85;margin-top:var(--sp-2)}
+.vmedia{position:relative;aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--e-4)}
+.vmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.1);transition:opacity var(--dur-4) var(--ease-glide),transform var(--dur-5) var(--ease-glide)}
+.vmedia img.on{opacity:1;transform:none}
+.vmedia::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(196,106,58,.18),rgba(44,14,7,.35));mix-blend-mode:multiply;pointer-events:none}
+
+/* visao */
+.vision{position:relative;isolation:isolate;overflow:hidden;color:var(--on-dark-hi)}
+.vision-bg{position:absolute;inset:0;z-index:-1}
+.vision-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
+.vision-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,9,5,.9),rgba(75,24,14,.62) 60%,rgba(196,106,58,.34))}
+.vision blockquote{margin:0;max-width:20ch;font-size:var(--text-4xl);font-weight:300;letter-spacing:var(--track-display);line-height:1.05;color:var(--on-dark-hi)}
+.vision blockquote b{font-weight:800;color:var(--accent-soft)}
+.vision .mission{margin-top:var(--sp-7);max-width:56ch;font-size:var(--text-lg);color:var(--on-dark-body);padding:var(--sp-6);border-radius:var(--r-card);background:var(--glass-d);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 0 0 1px var(--line-d)}
+.vision .mission small{display:block;font-size:var(--text-xs);letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--accent-soft);font-weight:600;margin-bottom:var(--sp-3)}
+
+/* contato */
+.contact{display:grid;grid-template-columns:5fr 6fr;gap:clamp(32px,6vw,96px)}
+.contact .h2{font-size:var(--text-2xl)}
+.contact-info{display:grid;gap:var(--sp-5);margin-top:var(--sp-7)}
+.ci{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-4) var(--sp-5);border-radius:var(--r-card);background:var(--surface-0);box-shadow:var(--e-1);border:1px solid var(--line-l-faint);transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.ci:hover{transform:translateX(6px);box-shadow:var(--e-3)}
+.ci .ic{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:var(--on-dark-hi)}
+.ci small{display:block;font-size:var(--text-xs);color:var(--on-light-faint);letter-spacing:var(--track-wide);text-transform:uppercase}
+.ci b{color:var(--on-light-hi);font-weight:600;overflow-wrap:anywhere}
+form.card,.cta-card{padding:clamp(24px,4vw,48px);border-radius:var(--r-card);background:var(--surface-0);box-shadow:var(--e-4),var(--e-inset);border:1px solid var(--line-l-faint);display:grid;gap:var(--sp-5)}
+.cta-card{align-content:center;justify-items:start}
+.btn-ghost-l{color:var(--brand);box-shadow:inset 0 0 0 1px var(--line-l-strong)}
+.btn-ghost-l:hover{background:var(--brand);color:var(--on-dark-hi);transform:translateY(-2px)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+label{display:grid;gap:var(--sp-2);font-size:var(--text-sm);font-weight:600;color:var(--on-light-hi)}
+input,textarea{font:inherit;font-size:var(--text-base);padding:14px 16px;border-radius:var(--r-input);border:1px solid var(--line-l-strong);background:var(--surface-1);color:var(--on-light-hi);transition:box-shadow var(--dur-2) var(--ease-out),border-color var(--dur-2) var(--ease-out);width:100%}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-wash)}
+textarea{min-height:120px;resize:vertical}
+.chk{display:flex;gap:var(--sp-3);align-items:flex-start;font-weight:400;font-size:var(--text-sm);color:var(--on-light-body)}
+.chk input{width:20px;height:20px;margin-top:3px;accent-color:var(--brand);flex:none;padding:0}
+.chk a{text-decoration:underline;text-underline-offset:3px;color:var(--brand)}
+.err{color:var(--accent-deep);font-size:var(--text-sm);min-height:1.2em;font-weight:500}
+.ok{color:var(--brand);font-weight:600}
+
+/* footer */
+.foot{background:var(--ink-900);color:var(--on-dark-body);padding-top:var(--sp-9);overflow:hidden}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--sp-7)}
+.foot img.fl{height:56px;width:auto}
+.foot h4{margin:0 0 var(--sp-4);font-size:var(--text-xs);letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--accent-soft);font-weight:600}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-3);font-size:var(--text-sm)}
+.foot a:hover{color:var(--accent-soft)}
+.pw{margin-top:var(--sp-5);display:inline-flex;align-items:center;gap:var(--sp-3);padding:8px 16px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--line-d);font-size:var(--text-xs);letter-spacing:var(--track-wide);color:var(--on-dark-mute)}
+.foot .disc2{margin-top:var(--sp-8);padding-block:var(--sp-6);border-top:1px solid var(--line-d);font-size:var(--text-sm);color:var(--on-dark-body);line-height:1.65}
+.foot .disc2 a{color:var(--accent-soft);text-decoration:underline;text-underline-offset:3px}
+.mega{font-size:var(--text-mega);font-weight:800;letter-spacing:var(--track-display);line-height:.8;white-space:nowrap;margin-top:var(--sp-5);margin-bottom:-.14em;background:linear-gradient(180deg,var(--brand-soft),var(--ink-900) 92%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;text-align:center}
+.copy{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3);font-size:var(--text-xs);color:var(--on-dark-faint);padding-block:var(--sp-5)}
+
+dialog{border:0;border-radius:var(--r-card);padding:var(--sp-7);max-width:min(640px,92vw);background:var(--surface-0);color:var(--on-light-body);box-shadow:var(--e-4)}
+dialog::backdrop{background:rgba(29,9,5,.7);backdrop-filter:blur(6px)}
+dialog h3{color:var(--on-light-hi);font-size:var(--text-xl);margin-bottom:var(--sp-4)}
+dialog p{margin-bottom:var(--sp-3);font-size:var(--text-sm)}
+
+/* reveal (entrada simples, sem interacao com rolagem) */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity var(--dur-4) var(--ease-glide) var(--d,0ms),transform var(--dur-4) var(--ease-glide) var(--d,0ms)}
+[data-reveal].in{opacity:1;transform:none}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+@media (max-width:1080px){
+  .nav a.lk{display:none}
+  .burger{display:block}
+  .nav{gap:var(--sp-3)}
+  .menu-open .nav a.lk{display:block}
+  .menu-open .nav{position:fixed;inset:76px 0 auto 0;flex-direction:column;align-items:flex-start;background:var(--brand-deep);padding:var(--sp-6) var(--gutter) var(--sp-7);gap:var(--sp-5);box-shadow:var(--e-4)}
+  .steps{grid-template-columns:repeat(2,1fr)} .step:nth-child(even){margin-top:0}
+}
+@media (max-width:860px){
+  .hero-main,.about,.method,.vals,.contact,.foot-grid{grid-template-columns:1fr}
+  .hero-main{padding-top:96px}
+  .stage{height:300px;order:-1;margin-bottom:var(--sp-2)}
+  .hero h1{max-width:none}
+  .about-media{max-width:480px}
+  .cta-card{align-content:center;justify-items:start}
+.btn-ghost-l{color:var(--brand);box-shadow:inset 0 0 0 1px var(--line-l-strong)}
+.btn-ghost-l:hover{background:var(--brand);color:var(--on-dark-hi);transform:translateY(-2px)}
+.f2{grid-template-columns:1fr}
+  .cmp{aspect-ratio:3/4;min-height:0}
+  .cmp-items span{font-size:var(--text-xs)}
+  .vmedia{aspect-ratio:4/3}
+  .hdr .btn{display:none}
+}
+@media (max-width:560px){
+  .steps{grid-template-columns:1fr}
+  .btn{padding:14px 22px}
+  .hero .cta .btn{flex:1 1 100%}
+  .lcard{width:260px;height:380px}
+}
+@media (prefers-reduced-motion:reduce){
+  .grain{animation-duration:6s}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-in">
+    <img src="b2a-wealth-logo-branco.png" alt="" width="1732" height="954">
+    <div class="loader-num" id="lnum">0</div>
+    <div class="loader-bar"><i id="lbar"></i></div>
+  </div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="hdr-logo" href="#topo" aria-label="B2A Wealth, início"><img src="b2a-wealth-logo-branco.png" alt="B2A Wealth" width="1732" height="954"></a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a class="lk" href="#sobre">Quem somos</a>
+      <a class="lk" href="#metodo">Método</a>
+      <a class="lk" href="#estrategias">Estratégias</a>
+      <a class="lk" href="#atendimento">Atendimento</a>
+      <a class="btn btn-primary" href="#contato">Converse com nossa equipe</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    </nav>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="foto-por-do-sol.jpg" alt="Família reunida na praia ao pôr do sol" width="1000" height="667" fetchpriority="high"></div>
+  <div class="wrap hero-main">
+    <div>
+      <h1 data-reveal>Seu patrimônio merece uma <em>visão completa.</em></h1>
+      <p class="sub" data-reveal style="--d:120ms">Planejamento financeiro e patrimonial, atendimento personalizado e acesso a um ecossistema de soluções especializadas.</p>
+      <div class="cta" data-reveal style="--d:240ms">
+        <a class="btn btn-primary" href="#atendimento">Conheça nosso modelo de atendimento <span class="arr" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="stage" id="stage" aria-label="Escultura 3D interativa: três degraus ascendentes. Arraste para girar.">
+      <canvas id="gl"></canvas>
+      <div class="stage-hint">Arraste para girar</div>
+    </div>
+  </div>
+  <div class="disc">
+    <div class="wrap">
+      <p>A B2A Wealth integra o ecossistema da AWT Alliance S.A. e atua em educação financeira e planejamento financeiro e patrimonial. Serviços sujeitos a regulação são prestados pelas empresas do AWT Group devidamente habilitadas para cada atividade. A administração e gestão de carteiras de valores mobiliários é realizada pela AWT Consultoria e Administração de Valores Mobiliários Ltda., CNPJ 35.137.445/0001-00, registrada perante a CVM.</p>
+      <p style="margin-top:8px">Consulte os Avisos Legais e Regulatórios do AWT Group: <a href="https://www.awtgroup.com.br/avisos-legais" target="_blank" rel="noopener">www.awtgroup.com.br</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM SOMOS -->
+<section class="sec light" id="sobre">
+  <div class="wrap about">
+    <div class="about-media" data-reveal>
+      <div class="photo p1"><img src="foto-familia.jpg" alt="Pai sorrindo com dois filhos pequenos no colo, em frente à casa da família" width="1000" height="667" loading="lazy"></div>
+      <div class="photo p2"><img src="foto-documentos.jpg" alt="Mãos sobre a mesa revisando um plano financeiro ao lado de um notebook" width="1000" height="667" loading="lazy"></div>
+    </div>
+    <div>
+      <span class="eyebrow" data-reveal>Quem somos</span>
+      <h2 class="h2" data-reveal style="--d:80ms">Objetivos de vida, transformados em plano.</h2>
+      <p class="lead" data-reveal style="--d:140ms;margin-top:24px">Transformamos objetivos em planos com número, prazo e estratégia, e caminhamos ao lado do cliente até realizá-los.</p>
+      <p data-reveal style="--d:200ms">Da reestruturação de dívidas à sucessão patrimonial, o mesmo planejador conduz o diagnóstico, a estratégia patrimonial e o acesso às soluções certas, em acompanhamento contínuo. Atendemos famílias e empresários com patrimônio financeiro entre R$ 500 mil e R$ 2 milhões.</p>
+      <div class="banker" data-reveal style="--d:260ms">
+        <div class="mono" aria-hidden="true">MR</div>
+        <div><b>Matheus Tenório Resende Ricaldoni</b><span>Banker, B2A Wealth</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODO: troca de cores -->
+<section class="sec swap" id="metodo" data-tone="0">
+  <div class="wrap">
+    <h2 class="h2" data-reveal style="max-width:16ch">Organização, planejamento e proteção.</h2>
+    <div class="trio" data-reveal><span><b>Número</b></span><span><b>Prazo</b></span><span><b>Estratégia</b></span></div>
+    <div class="method">
+      <div class="tabs" role="tablist" id="tabs">
+        <button class="tab" role="tab" aria-selected="true" data-i="0"><h3>Organização</h3><p>Mapeamos receitas, dívidas, objetivos e prazos para dar clareza ao ponto de partida da sua vida financeira.</p></button>
+        <button class="tab" role="tab" aria-selected="false" data-i="1"><h3>Planejamento</h3><p>Cada objetivo vira um plano com número, prazo e estratégia, do orçamento da família à sucessão patrimonial.</p></button>
+        <button class="tab" role="tab" aria-selected="false" data-i="2"><h3>Proteção</h3><p>Identificamos necessidades de proteção para você e sua família e facilitamos o acesso a soluções de empresas habilitadas do ecossistema AWT Group.</p></button>
+        <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+      </div>
+      <div class="tab-media" id="tmedia">
+        <img class="on" src="foto-documentos.jpg" alt="Mesa de trabalho com plano financeiro, caneta e notebook" width="1000" height="667" loading="lazy">
+        <img src="foto-arquitetura.jpg" alt="Edifício de arquitetura contemporânea sob céu claro" width="1000" height="667" loading="lazy">
+        <img src="foto-familia-praia.jpg" alt="Casal e filha caminhando na beira do mar" width="1000" height="667" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIALIDADES: coverflow infinito -->
+<section class="sec dark spec" id="estrategias">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h2" data-reveal>Uma única estratégia de planejamento</h2>
+      <p class="lead" data-reveal style="--d:100ms">Três frentes conduzidas pelo mesmo planejador. Arraste os cartões ou use as setas.</p>
+    </div>
+  </div>
+  <div class="cflow" id="cflow" aria-roledescription="carrossel" aria-label="Especialidades">
+    <div class="cflow-track">
+      <article class="scard">
+        <div class="im"><img src="foto-predios.jpg" alt="Prédios empresariais vistos de baixo para cima" width="1000" height="667" loading="lazy"></div>
+        <div class="bd">
+          <h3>Planejamento para investimentos</h3>
+          <p class="st">Estratégias para acumular, proteger e multiplicar seu patrimônio</p>
+          <div class="chips"><span class="chip">Renda Fixa</span><span class="chip">Renda Variável</span><span class="chip">Crédito Privado</span><span class="chip">Private Equity</span></div>
+        </div>
+      </article>
+      <article class="scard">
+        <div class="im"><img src="foto-casa-moderna.jpg" alt="Casa moderna iluminada ao entardecer, com árvore e gramado" width="1000" height="667" loading="lazy"></div>
+        <div class="bd">
+          <h3>Imobiliário</h3>
+          <p class="st">Planejamento para aquisição de imóveis, consórcios, e financiamentos</p>
+          <div class="chips"><span class="chip">Aquisição</span><span class="chip">Consórcios</span><span class="chip">Financiamentos</span></div>
+        </div>
+      </article>
+      <article class="scard">
+        <div class="im"><img src="foto-arvore.jpg" alt="Árvore frondosa em campo aberto sob céu azul" width="1000" height="667" loading="lazy"></div>
+        <div class="bd">
+          <h3>Sucessório e Holding</h3>
+          <p class="st">Estratégias para desenhar estruturas societárias e perpetuar legado</p>
+          <div class="chips"><span class="chip">Sucessão</span><span class="chip">Holding</span><span class="chip">Legado familiar</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="belt-ctl">
+      <button class="round" id="cprev" aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="round" id="cnext" aria-label="Próximo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <p class="note">Serviços sujeitos a regulação, como a administração de carteiras de valores mobiliários e os serviços jurídicos, são prestados por empresas e profissionais devidamente habilitados.</p>
+  </div>
+</section>
+
+<!-- ANTES / DEPOIS -->
+<section class="sec light" id="plano">
+  <div class="wrap">
+    <div class="cmp-head">
+      <h2 class="h2" data-reveal>Da decisão isolada ao plano com número e prazo.</h2>
+      <p class="lead mute" data-reveal style="--d:100ms;margin-top:24px">Arraste a linha e compare as duas realidades.</p>
+    </div>
+    <div class="cmp" id="cmp" style="--cut:50%" aria-label="Comparador arrastável: sem plano e com plano">
+      <div class="cmp-l cmp-before">
+        <img src="foto-documentos.jpg" alt="Mesa com papéis e notebook, representando finanças sem organização" width="1000" height="667" loading="lazy">
+        <span class="cmp-tag">Sem plano</span>
+        <div class="cmp-items"><span>Objetivos sem número</span><span>Decisões isoladas</span><span>Dívidas sem prazo</span></div>
+      </div>
+      <div class="cmp-l cmp-after">
+        <img src="foto-casa-piscina.jpg" alt="Casa moderna com piscina, representando um objetivo conquistado" width="1000" height="667" loading="lazy">
+        <span class="cmp-tag">Com plano</span>
+        <div class="cmp-items"><span>Meta com número</span><span>Prazo definido</span><span>Estratégia acompanhada</span></div>
+      </div>
+      <div class="cmp-handle"><b aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ETAPAS DA VIDA -->
+<section class="sec sand" id="etapas" style="padding-bottom:calc(var(--section-y) * .8)">
+  <div class="wrap strip-head">
+    <h2 class="h2" data-reveal style="max-width:14ch">Planejamento para cada etapa da vida</h2>
+    <div class="belt-ctl" style="margin:0">
+      <button class="round l" id="sprev" aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="round l" id="snext" aria-label="Próximo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="strip" id="strip">
+    <article class="lcard"><img src="foto-familia.jpg" alt="Pai com dois filhos pequenos sorrindo" width="1000" height="667" loading="lazy"><div><h3>Família</h3><p>Orçamento, reserva e objetivos da casa.</p></div></article>
+    <article class="lcard"><img src="foto-predios.jpg" alt="Prédios comerciais vistos de baixo" width="1000" height="667" loading="lazy"><div><h3>Empresa</h3><p>Organização financeira para empresários.</p></div></article>
+    <article class="lcard"><img src="foto-casa-moderna.jpg" alt="Casa moderna com grandes janelas" width="1000" height="667" loading="lazy"><div><h3>Imóvel</h3><p>Aquisição, consórcio e financiamento.</p></div></article>
+    <article class="lcard"><img src="foto-campo.jpg" alt="Campo dourado ao pôr do sol" width="1000" height="563" loading="lazy"><div><h3>Futuro</h3><p>Previdência e longevidade financeira.</p></div></article>
+    <article class="lcard"><img src="foto-arvore.jpg" alt="Árvore centenária em campo aberto" width="1000" height="667" loading="lazy"><div><h3>Legado</h3><p>Sucessão e continuidade familiar.</p></div></article>
+    <article class="lcard"><img src="foto-ondas.jpg" alt="Ondas calmas do mar" width="1000" height="667" loading="lazy"><div><h3>Recomeço</h3><p>Reestruturação de dívidas com prazo e método.</p></div></article>
+  </div>
+</section>
+
+<!-- MODELO DE ATENDIMENTO -->
+<section class="sec model" id="atendimento">
+  <div class="model-bg"><img src="foto-montanhas.jpg" alt="Montanhas ao amanhecer acima de um mar de nuvens" width="1800" height="1200" loading="lazy"></div>
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Nosso modelo de atendimento</span>
+    <h2 class="h2" data-reveal style="--d:80ms;max-width:18ch">Um ponto de contato para cada necessidade patrimonial.</h2>
+    <div class="steps">
+      <article class="step" data-reveal><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h3>Compreender</h3><p>Ouvimos sua realidade financeira e patrimonial, suas prioridades e seus prazos.</p></article>
+      <article class="step" data-reveal style="--d:80ms"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>Planejar</h3><p>Transformamos objetivos em planos com número, prazo e estratégia.</p></article>
+      <article class="step" data-reveal style="--d:160ms"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg></div><h3>Conectar</h3><p>Facilitamos o acesso às soluções do ecossistema AWT Group, prestadas por empresas habilitadas.</p></article>
+      <article class="step" data-reveal style="--d:240ms"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg></div><h3>Acompanhar</h3><p>Mantemos presença contínua na evolução dos seus objetivos.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES: troca de cores -->
+<section class="sec swap" id="valores" data-tone="0">
+  <div class="wrap">
+    <h2 class="h2" data-reveal>No que acreditamos</h2>
+    <div class="vals">
+      <ul class="vlist" id="vlist">
+        <li class="vitem on" data-i="0">O plano vem antes do produto<small>Primeiro o objetivo, o número e o prazo. Depois a solução.</small></li>
+        <li class="vitem" data-i="1">Presença contínua<small>Acompanhamento próximo, em todas as etapas.</small></li>
+        <li class="vitem" data-i="2">Clareza acima de sofisticação<small>Se não ficou claro, ainda não explicamos bem.</small></li>
+        <li class="vitem" data-i="3">Verdade, mesmo quando incomoda<small>Conversas diretas, porque o patrimônio é seu.</small></li>
+        <li class="vitem" data-i="4">Rigor técnico<small>Método, análise e disciplina em cada plano.</small></li>
+      </ul>
+      <div class="vmedia" id="vmedia">
+        <img class="on" src="foto-documentos.jpg" alt="Plano financeiro sendo revisado à mesa" width="1000" height="667" loading="lazy">
+        <img src="foto-familia-praia.jpg" alt="Família caminhando junta na praia" width="1000" height="667" loading="lazy">
+        <img src="foto-arquitetura.jpg" alt="Fachada de vidro e linhas limpas" width="1000" height="667" loading="lazy">
+        <img src="foto-montanhas.jpg" alt="Picos de montanha acima das nuvens" width="1800" height="1200" loading="lazy">
+        <img src="foto-colinas.jpg" alt="Colinas verdes em camadas" width="1000" height="595" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISAO -->
+<section class="sec vision" id="visao">
+  <div class="vision-bg"><img src="foto-campo.jpg" alt="Campo dourado ao pôr do sol" width="1000" height="563" loading="lazy"></div>
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Nossa visão</span>
+    <blockquote data-reveal style="--d:80ms">Até <b>2030</b>, uma rede de planejadores presente em todo o Brasil.</blockquote>
+    <div class="mission" data-reveal style="--d:160ms"><small>Missão</small>Transformar objetivos de vida em planos com número, prazo e estratégia, e facilitar o acesso às soluções para realizá-los, caminhando ao lado de cada cliente em cada etapa.</div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="sec light" id="contato">
+  <div class="wrap contact">
+    <div>
+      <span class="eyebrow" data-reveal>Contato</span>
+      <h2 class="h2" data-reveal style="--d:80ms">Vamos conversar sobre o que realmente importa para você.</h2>
+      <div class="contact-info">
+        <a class="ci" href="https://wa.me/5535999887179" target="_blank" rel="noopener" data-reveal><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg></span><span><small>WhatsApp e telefone</small><b>+55 (35) 99988-7179</b></span></a>
+        <a class="ci" href="mailto:b2aplanejamentofinanceiro@gmail.com" data-reveal style="--d:80ms"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span><span><small>E-mail</small><b>b2aplanejamentofinanceiro@gmail.com</b></span></a>
+      </div>
+    </div>
+    <div class="card cta-card" data-reveal style="--d:120ms">
+      <p class="lead">Conte o que você quer organizar e marcamos uma conversa sobre os seus objetivos.</p>
+      <a class="btn btn-dark" href="https://wa.me/5535999887179?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20conversa%20sobre%20planejamento%20financeiro%20e%20patrimonial." target="_blank" rel="noopener">Agende uma conversa pelo WhatsApp <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-ghost-l" href="mailto:b2aplanejamentofinanceiro@gmail.com?subject=Conversa%20sobre%20planejamento%20patrimonial">Prefiro enviar um e-mail</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img class="fl" src="b2a-wealth-logo-branco.png" alt="B2A Wealth" width="1732" height="954" loading="lazy">
+        <p style="margin-top:20px;max-width:36ch;color:var(--on-dark-mute)">Organização | Planejamento | Proteção</p>
+        <span class="pw">Powered by AWT</span>
+      </div>
+      <div><h4>Navegue</h4><ul><li><a href="#sobre">Quem somos</a></li><li><a href="#metodo">Método</a></li><li><a href="#estrategias">Estratégias</a></li><li><a href="#atendimento">Atendimento</a></li><li><a href="#privacidade" data-dlg>Política de Privacidade</a></li></ul></div>
+      <div><h4>Contato</h4><ul><li><a href="https://wa.me/5535999887179" target="_blank" rel="noopener">+55 (35) 99988-7179</a></li><li><a href="mailto:b2aplanejamentofinanceiro@gmail.com">b2aplanejamentofinanceiro@gmail.com</a></li></ul></div>
+    </div>
+    <div class="disc2">
+      <p>A B2A Wealth integra o ecossistema da AWT Alliance S.A. e atua em educação financeira e planejamento financeiro e patrimonial. Serviços sujeitos a regulação são prestados pelas empresas do AWT Group devidamente habilitadas para cada atividade. A administração e gestão de carteiras de valores mobiliários é realizada pela AWT Consultoria e Administração de Valores Mobiliários Ltda., CNPJ 35.137.445/0001-00, registrada perante a CVM.</p>
+      <p style="margin-top:8px">Consulte os Avisos Legais e Regulatórios do AWT Group: <a href="https://www.awtgroup.com.br/avisos-legais" target="_blank" rel="noopener">www.awtgroup.com.br</a></p>
+    </div>
+    <div class="copy"><span>B2A Wealth. Todos os direitos reservados.</span></div>
+  </div>
+  <div class="mega" aria-hidden="true">B2A Wealth</div>
+</footer>
+
+<dialog id="dlg">
+  <h3>Política de Privacidade</h3>
+  <p>Os dados que você compartilhar por WhatsApp ou e-mail (nome, telefone e mensagem) são usados exclusivamente para retornar o seu contato e agendar uma conversa sobre planejamento financeiro e patrimonial.</p>
+  <p>Não compartilhamos seus dados para fins comerciais de terceiros. Você pode solicitar acesso, correção ou exclusão a qualquer momento pelo e-mail b2aplanejamentofinanceiro@gmail.com, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
+  <form method="dialog" style="margin-top:20px"><button class="btn btn-dark">Fechar</button></form>
+</dialog>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  /* loader numerico */
+  const ln = $('#lnum'), lb = $('#lbar'), loader = $('#loader');
+  let t0 = performance.now(), shown = 0;
+  const DUR = 1600;
+  (function tick(now) {
+    const p = clamp((now - t0) / DUR, 0, 1), e = 1 - Math.pow(1 - p, 3);
+    shown = Math.round(e * 100); ln.textContent = shown; lb.style.transform = `scaleX(${e})`;
+    if (p < 1) requestAnimationFrame(tick);
+    else setTimeout(() => { loader.classList.add('done'); document.body.classList.add('ready'); startReveals(); }, 250);
+  })(t0);
+
+  /* reveals de entrada */
+  function startReveals() {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    $$('[data-reveal]').forEach(el => io.observe(el));
+  }
+
+  /* header (observer, sem listener de scroll) */
+  const hdr = $('#hdr'), sent = document.createElement('div');
+  sent.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:80px;pointer-events:none';
+  document.body.prepend(sent);
+  new IntersectionObserver(([e]) => hdr.classList.toggle('scrolled', !e.isIntersecting)).observe(sent);
+  const burger = $('#burger');
+  burger.addEventListener('click', () => { const o = document.body.classList.toggle('menu-open'); burger.setAttribute('aria-expanded', o); });
+  $$('#nav a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+
+  /* dialogo de privacidade */
+  const dlg = $('#dlg');
+  $$('[data-dlg]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); dlg.showModal(); }));
+
+  /* ---------- belt infinito generico (arraste, inercia, auto) ---------- */
+  function belt(root, cards, o) {
+    const N = cards.length; let stride = o.stride(), total = N * stride, pos = 0, vel = 0, drag = false, lx = 0, moved = 0, target = null, last = performance.now(), idle = 0;
+    const wrap = d => d - Math.round(d / total) * total;
+    const resize = () => { const k = stride; stride = o.stride(); total = N * stride; pos *= stride / k; if (target != null) target *= stride / k; };
+    addEventListener('resize', resize);
+    function render() { cards.forEach((c, i) => o.render(c, wrap(i * stride - pos), stride)); }
+    function go(dir) { const base = target != null ? target : Math.round(pos / stride) * stride; target = base + dir * stride; vel = 0; idle = 0; }
+    root.addEventListener('pointerdown', e => { if (e.target.closest('button')) return; drag = true; moved = 0; lx = e.clientX; vel = 0; target = null; root.setPointerCapture(e.pointerId); });
+    root.addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - lx; lx = e.clientX; moved += Math.abs(dx); pos -= dx; vel = -dx; });
+    const up = () => { if (!drag) return; drag = false; idle = 0; if (o.snap) target = Math.round((pos + vel * 10) / stride) * stride; };
+    root.addEventListener('pointerup', up); root.addEventListener('pointercancel', up);
+    root.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+    let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(root);
+    (function loop(now) {
+      const dt = Math.min(48, now - last) / 16.67; last = now;
+      if (vis) {
+        if (!drag) {
+          if (target != null) { pos += (target - pos) * (1 - Math.pow(.001, dt / 38)); if (Math.abs(target - pos) < .4) { pos = target; target = null; } }
+          else if (Math.abs(vel) > .05) { pos += vel * dt; vel *= Math.pow(.93, dt); }
+          else { idle += dt; if (o.snap) { if (idle > o.wait) { go(1); } } else pos += o.drift * dt; }
+        }
+        render();
+      }
+      requestAnimationFrame(loop);
+    })(last);
+    return { go };
+  }
+
+  /* coverflow 3D de especialidades */
+  const cf = $('#cflow'), scards = $$('.scard', cf);
+  const cfb = belt(cf, scards, {
+    snap: true, wait: 270,
+    stride: () => Math.min(innerWidth * .62, scards[0].offsetWidth * .86),
+    render(el, d, s) {
+      const a = Math.abs(d) / s, r = clamp(-d / s * 34, -48, 48), z = -a * 220, sc = 1 - Math.min(a, 1.6) * .07;
+      el.style.transform = `translate(-50%,-50%) translate3d(${d}px,0,${z}px) rotateY(${r}deg) scale(${sc})`;
+      el.style.opacity = clamp(1.55 - a, 0, 1); el.style.zIndex = Math.round(100 - a * 10);
+      el.style.filter = `brightness(${1 - Math.min(a, 1) * .38})`;
+    }
+  });
+  $('#cprev').addEventListener('click', () => cfb.go(-1)); $('#cnext').addEventListener('click', () => cfb.go(1));
+
+  /* faixa de etapas (deriva continua) */
+  const sc = $('#strip'), lcards = $$('.lcard', sc);
+  const sb = belt(sc, lcards, {
+    snap: false, drift: .55,
+    stride: () => lcards[0].offsetWidth + 34,
+    render(el, d, s) { const a = Math.abs(d) / (s * 3); el.style.transform = `translate(-50%,-50%) translate3d(${d}px,${Math.sin(d / s * 1.1) * -18}px,0) rotate(${d / s * 2.2}deg) scale(${1 - a * .06})`; }
+  });
+  $('#sprev').addEventListener('click', () => sb.go(-1)); $('#snext').addEventListener('click', () => sb.go(1));
+
+  /* comparador: arraste + oscila em loop quando solto */
+  const cmp = $('#cmp'); let phase = 0, cdrag = false, resume = 0, cpos = 50;
+  const setCut = v => { cpos = clamp(v, 4, 96); cmp.style.setProperty('--cut', cpos + '%'); };
+  const fromX = x => { const r = cmp.getBoundingClientRect(); setCut((x - r.left) / r.width * 100); };
+  cmp.addEventListener('pointerdown', e => { cdrag = true; cmp.setPointerCapture(e.pointerId); fromX(e.clientX); });
+  cmp.addEventListener('pointermove', e => { if (cdrag) fromX(e.clientX); });
+  const cup = () => { if (!cdrag) return; cdrag = false; phase = Math.asin(clamp((cpos - 50) / 40, -1, 1)); resume = performance.now() + 1200; };
+  cmp.addEventListener('pointerup', cup); cmp.addEventListener('pointercancel', cup);
+  let cvis = true; new IntersectionObserver(([e]) => cvis = e.isIntersecting).observe(cmp);
+  (function cl(now) { if (cvis && !cdrag && now > resume) { phase += .012; setCut(50 + Math.sin(phase) * 40); } requestAnimationFrame(cl); })(0);
+
+  /* troca de cores: metodo (abas autoplay) */
+  const methodSec = $('#metodo'), tabs = $$('.tab'), tm = $$('#tmedia img'), prog = $('#prog'); let ti = 0, tStart = performance.now(), tHold = false;
+  const TDUR = 6000;
+  function setTab(i) { ti = i; tStart = performance.now(); tabs.forEach((t, k) => t.setAttribute('aria-selected', k === i)); tm.forEach((m, k) => m.classList.toggle('on', k === i)); methodSec.dataset.tone = i; }
+  tabs.forEach((t, i) => { t.addEventListener('click', () => setTab(i)); t.addEventListener('mouseenter', () => { tHold = true; setTab(i); }); t.addEventListener('mouseleave', () => { tHold = false; tStart = performance.now(); }); });
+  let mvis = true; new IntersectionObserver(([e]) => mvis = e.isIntersecting).observe(methodSec);
+  (function tl(now) { if (mvis && !tHold) { const p = (now - tStart) / TDUR; prog.style.transform = `scaleX(${clamp(p, 0, 1)})`; if (p >= 1) setTab((ti + 1) % 3); } requestAnimationFrame(tl); })(0);
+
+  /* troca de cores: valores */
+  const vs = $('#valores'), vitems = $$('.vitem'), vimg = $$('#vmedia img'); let vi = 0, vhold = false, vt = performance.now();
+  const tones = [0, 1, 2, 1, 0];
+  function setV(i) { vi = i; vt = performance.now(); vitems.forEach((v, k) => v.classList.toggle('on', k === i)); vimg.forEach((m, k) => m.classList.toggle('on', k === i)); vs.dataset.tone = tones[i]; }
+  vitems.forEach((v, i) => { v.addEventListener('mouseenter', () => { vhold = true; setV(i); }); v.addEventListener('mouseleave', () => vhold = false); v.addEventListener('click', () => setV(i)); });
+  let vvis = true; new IntersectionObserver(([e]) => vvis = e.isIntersecting).observe(vs);
+  (function vl(now) { if (vvis && !vhold && now - vt > 3800) setV((vi + 1) % vitems.length); requestAnimationFrame(vl); })(0);
+
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+const host = document.getElementById('stage'), canvas = document.getElementById('gl');
+try {
+  const cs = getComputedStyle(document.documentElement), col = n => new THREE.Color(cs.getPropertyValue(n).trim());
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+  const scene = new THREE.Scene();
+  const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture;
+  const cam = new THREE.PerspectiveCamera(32, 1, .1, 50); cam.position.set(0, .6, 12.5);
+  const key = new THREE.DirectionalLight(col('--accent-soft'), 2.2); key.position.set(4, 5, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(col('--sand'), 1.2); rim.position.set(-5, 2, -4); scene.add(rim);
+
+  const g = new THREE.Group(); scene.add(g);
+  const mats = [col('--brand-soft'), col('--accent-deep'), col('--accent')].map(c => new THREE.MeshPhysicalMaterial({ color: c, metalness: .45, roughness: .26, clearcoat: 1, clearcoatRoughness: .12 }));
+  const hs = [1.1, 2.0, 3.0];
+  hs.forEach((h, i) => { const m = new THREE.Mesh(new RoundedBoxGeometry(1.25, h, 1.25, 6, .14), mats[i]); m.position.set((i - 1) * 1.55, -1.55 + h / 2, 0); g.add(m); });
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(3.1, .018, 16, 160), new THREE.MeshStandardMaterial({ color: col('--sand'), metalness: .9, roughness: .2 })); ring.rotation.x = Math.PI / 2.3; g.add(ring);
+  const ring2 = ring.clone(); ring2.scale.setScalar(1.22); ring2.rotation.set(Math.PI / 2.8, .4, 0); g.add(ring2);
+  const dots = new THREE.Group(); g.add(dots);
+  const dm = new THREE.MeshStandardMaterial({ color: col('--accent-soft'), emissive: col('--accent'), emissiveIntensity: .6, roughness: .3 });
+  for (let i = 0; i < 18; i++) { const s = new THREE.Mesh(new THREE.SphereGeometry(.04 + Math.random() * .05, 12, 12), dm); const a = Math.random() * 6.28, r = 2.4 + Math.random() * 1.6; s.position.set(Math.cos(a) * r, (Math.random() - .5) * 4, Math.sin(a) * r); dots.add(s); }
+  g.position.y = .1; g.rotation.x = .12;
+
+  let ry = -.5, vy = .004, tx = 0, ty = 0, drag = false, lx = 0, ly = 0, x = 0, y = 0;
+  host.addEventListener('pointerdown', e => { drag = true; lx = e.clientX; ly = e.clientY; host.setPointerCapture(e.pointerId); });
+  host.addEventListener('pointermove', e => { if (drag) { vy = (e.clientX - lx) * .0016; ry += (e.clientX - lx) * .008; tx = clamp((e.clientY - ly) * .004, -.5, .5); lx = e.clientX; ly = e.clientY; } else { const r = host.getBoundingClientRect(); x = ((e.clientX - r.left) / r.width - .5); y = ((e.clientY - r.top) / r.height - .5); } });
+  const rel = () => { drag = false; }; host.addEventListener('pointerup', rel); host.addEventListener('pointercancel', rel);
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+  const size = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+  new ResizeObserver(size).observe(host); size();
+  let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(host);
+  const clock = new THREE.Clock();
+  renderer.setAnimationLoop(() => {
+    if (!vis) return; const t = clock.getElapsedTime();
+    if (!drag) { vy += (.0042 - vy) * .02; ry += vy; ty += (0 - ty) * .04; tx *= .95; }
+    g.rotation.y = ry; g.rotation.x = .12 + tx + y * .15; g.position.y = .1 + Math.sin(t * .9) * .12;
+    ring.rotation.z = t * .25; ring2.rotation.z = -t * .18; dots.rotation.y = t * .12;
+    cam.position.x = x * .8; cam.lookAt(0, 0, 0);
+    renderer.render(scene, cam);
+  });
+} catch (err) { host.style.display = 'none'; }
+</script>
+</body>
+</html>
